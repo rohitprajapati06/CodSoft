@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #666;
+            margin: 0;
+            color: #fff;
+            
+        }
+        .calculator {
+            background-color: #000;
+            width: 350px;
+            border: 2px solid black;
+        }
+        .display {
+            text-align: right;
+            padding: 20px;
+            background-color: #000;
+            color: #fff;
+            font-size: 2.5em;
+            border: none;
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 2px;
+        }
+        .btn {
+            padding: 20px;
+            background-color: #333;
+            border: none;
+            color: #fff;
+            font-size: 1.5em;
+            text-align: center;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #555;
+        }
+        .btn.operator {
+            background-color: #333;
+            color: cyan;
+        }
+        .btn.operator:hover {
+            background-color: #555;
+        }
+        .btn.clear {
+            background-color: #333;
+            color: cyan;
+        }
+        .btn.clear:hover {
+            background-color: #555;
+        }
+        .btn.equals {
+            background-color: #333;
+            color: cyan;
+        }
+        .btn.equals:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" id="display" class="display" disabled>
+        <div class="buttons">
+            <button class="btn clear" data-value="C">C</button>
+            <button class="btn operator" data-value="%">%</button>
+            <button class="btn operator" data-value="⌫">⌫</button>
+            <button class="btn operator" data-value="/">÷</button>
+            <button class="btn" data-value="7">7</button>
+            <button class="btn" data-value="8">8</button>
+            <button class="btn" data-value="9">9</button>
+            <button class="btn operator" data-value="*">×</button>
+            <button class="btn" data-value="4">4</button>
+            <button class="btn" data-value="5">5</button>
+            <button class="btn" data-value="6">6</button>
+            <button class="btn operator" data-value="-">−</button>
+            <button class="btn" data-value="1">1</button>
+            <button class="btn" data-value="2">2</button>
+            <button class="btn" data-value="3">3</button>
+            <button class="btn operator" data-value="+">+</button>
+            <button class="btn" data-value="00">00</button>
+            <button class="btn" data-value="0">0</button>
+            <button class="btn" data-value=".">.</button>
+            <button class="btn equals" data-value="=">=</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+    const display = document.getElementById('display');
+    const buttons = document.querySelectorAll('.btn');
+    let currentInput = '';
+    let operator = '';
+    let firstValue = '';
+    let secondValue = '';
+    let result = '';
+
+    function evaluate(first, second, operator) {
+        first = parseFloat(first);
+        second = parseFloat(second);
+        switch (operator) {
+            case '+': return first + second;
+            case '-': return first - second;
+            case '*': return first * second;
+            case '/': return first / second;
+            case '%': return first % second;
+            default: return second;
+        }
+    }
+
+    buttons.forEach(button => {
+        button.addEventListener('click', function () {
+            const value = this.getAttribute('data-value');
+
+            if (value === 'C') {
+                currentInput = '';
+                operator = '';
+                firstValue = '';
+                secondValue = '';
+                result = '';
+                display.value = '';
+            } else if (value === '⌫') {
+                currentInput = currentInput.slice(0, -1);
+                display.value = currentInput || (firstValue + operator);
+            } else if (value === '=') {
+                secondValue = currentInput;
+                if (firstValue !== '' && secondValue !== '' && operator !== '') {
+                    result = evaluate(firstValue, secondValue, operator);
+                    display.value = result;
+                    firstValue = result;
+                    currentInput = '';
+                    operator = '';
+                }
+            } else if (value === '%') {
+                if (currentInput !== '') {
+                    currentInput = (parseFloat(currentInput) / 100).toString();
+                    display.value = currentInput;
+                }
+            } else if (['+', '-', '*', '/', '%'].includes(value)) {
+                if (currentInput !== '') {
+                    firstValue = currentInput;
+                    operator = value;
+                    currentInput = '';
+                    display.value = firstValue + operator;
+                }
+            } else {
+                currentInput += value;
+                display.value = firstValue + operator + currentInput;
+            }
+        });
+    });
+});
+
+    </script>
+</body>
+</html>

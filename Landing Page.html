@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The Dorritos</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  font-family: Verdana, sans-serif;
+  margin: 0; /* Remove margin from body */
+}
+
+/* Moving Sidebar styles */
+.sidebar {
+  position: fixed;
+  left: -250px; /* Initially hidden outside of the viewport */
+  top: 0;
+  width: 250px;
+  height: 100%;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.3s;
+  z-index: 2; /* Higher than text overlay */
+}
+
+.sidebar.open {
+  left: 0; /* Slide in the sidebar */
+}
+
+.sidebar a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  color: #f1f1f1;
+}
+
+.promo-code-dropdown {
+  display: none; /* Hidden by default */
+  padding-left: 32px;
+  margin-top: 10px;
+}
+
+.promo-code-dropdown input[type="text"] {
+  padding: 5px;
+  width: 70%;
+  margin-right: 0;
+}
+
+.promo-code-dropdown button {
+  padding: 5px 10px;
+  cursor: pointer;
+  margin: 0;
+}
+
+.mcontainer {
+  display: inline-block;
+  cursor: pointer;
+  position: fixed;
+  top: 20px; /* Adjust to set distance from top */
+  left: 20px; /* Adjust to set distance from left */
+  z-index: 1000; /* Ensure it stays on top of other elements */
+}
+
+.bar1, .bar2, .bar3 {
+  display: block;
+  width: 35px;
+  height: 5px;
+  margin: 6px auto;
+  background-color: #818181;
+  transition: 0.4s;
+}
+
+.mcontainer.open .bar1 {
+  transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.mcontainer.open .bar2 {
+  opacity: 0;
+}
+
+.mcontainer.open .bar3 {
+  transform: rotate(45deg) translate(-5px, -6px);
+}
+
+.text-overlay {
+  position: absolute;
+  top: 50%;
+  left: 20px; /* Adds margin from the left */
+  transform: translateY(-50%);
+  color: white;
+  text-align: left;
+  z-index: 1; /* Ensure text is above the image */
+  width: calc(100% - 40px); /* Adjusts width to fit inside the image with margin */
+  
+}
+
+.text-overlay h1 {
+  font-size: 70px;
+  margin: 0;
+ font-weight:300;
+ color: #000;
+ background-color: burlywood;
+ display: inline-block; 
+
+}
+
+.text-overlay p {
+  font-size: 30px;
+  margin: 20px;
+  text-align:left;
+  color: #000;
+  background-color: burlywood;
+  display: inline-block; 
+
+}
+
+.mySlides {
+   display: none; /* Hidden by default */
+   width: 100%; /* Full width */
+}
+
+.slideshow-container.with-sidebar {
+  margin-left: 250px; /* Offset when sidebar is open */
+}
+
+/* Responsive full-height image */
+.full-height {
+  height: 100%; /* Full height */
+  width: 100%; /* Full width */
+}
+
+img.full-height {
+  vertical-align: middle;
+  width: 100%;
+  height: 100vh; /* Make images cover the entire viewport height */
+}
+
+/* Slideshow container */
+.slideshow-container {
+  position: relative;
+  max-width: 100%;
+  margin: auto; /* Centered *//* Set container height to 100% of viewport */
+  transition: margin-left 0.3s; /* Transition to match the sidebar */
+
+}
+
+.hcontainer {
+ background-image: url("https://media.istockphoto.com/id/1368151405/photo/bamboo-wood-surface-with-texture-and-pattern-light-bamboo-background-for-decorating-furniture.jpg?s=612x612&w=0&k=20&c=kKHgmh8JInES6QlcTIGwHIyef4PSY9ZfJLC5KKUfSYA=");
+ background-repeat: no-repeat;
+ background-size: cover;
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+  margin-top: 0; /* Remove gap between slideshow and coupons */
+}
+
+::selection{
+  background-color: burlywood;
+  color:black;
+}
+
+.slider {
+  display: flex;
+  transition: transform 0.5s ease;
+  margin: 0 10px; /* Adjust to reduce gap */
+}
+
+.coupon {
+  border: 2px solid #bbb;
+  width: 60%;
+  border-radius: 10px;
+  margin: 10px;
+  max-width: 400px;
+  flex-shrink: 0;
+  background-color: none;
+}
+
+.ccontainer {
+  padding: 2px 16px;
+  background-color: none;
+}
+
+.promo {
+  background: #ccc;
+  padding: 3px;
+}
+
+
+.expire {
+  color: red;
+}
+
+.arrow {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: black;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 3px;
+  user-select: none;
+}
+
+.arrow:hover {
+  background-color:#FAEBD7;
+}
+
+.prev {
+  left: 0;
+  background-color: #FAEBD7;
+}
+
+.next {
+  right: 0;
+  background-color: #FAEBD7;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 20px;
+    width: 80%;
+    background-color: none;
+    
+    margin: 0 auto; /* Center the grid container */
+}
+
+.grid-item {
+    text-align: center;
+    padding: 10px;
+    background-color: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease; /* Add transition for hover effect */
+}
+
+.grid-item img {
+    width: 100%;
+    height: 400px; /* Set a fixed height */
+    object-fit: cover; /* Ensure images cover the area without stretching */
+    border-radius: 5px;
+    border: none; /* Remove border from images */
+}
+
+
+.grid-item:hover {
+    transform: scale(1.05); /* Scale up on hover */
+}
+.grid-item h3 {
+    font-size: 1.1em;
+    margin: 10px 0 5px 0;
+}
+
+.grid-item p {
+    font-size: 0.9em;
+    color: #666;
+}
+.pagination {
+  text-align: center;
+  margin-top: 20px;
+  background-color: none;
+}
+
+.pagination button {
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  background-color: bisque;
+}
+
+.pagination button.active {
+  background-color: #FAEBD7;
+  color: black;
+}
+
+.pagination button:hover:not(.active) {
+  background-color: bisque;
+  color: black;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.cafe{
+  background-image: url("https://media.istockphoto.com/id/1368151405/photo/bamboo-wood-surface-with-texture-and-pattern-light-bamboo-background-for-decorating-furniture.jpg?s=612x612&w=0&k=20&c=kKHgmh8JInES6QlcTIGwHIyef4PSY9ZfJLC5KKUfSYA=");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.quote-box {
+    background-color: white;
+    padding: 20px 20px 20px 40px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    position: relative;
+    float: left; /* Align to the left */
+    width: 80%; /* Adjust the width as needed */
+    margin-right: 20px;
+    margin : 20px ;
+    background-color: #eeeeee;
+}
+
+.quote-box::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    bottom: 20px;
+    width: 6px;
+    background-color: gray;
+}
+
+.quote {
+    font-style: italic;
+    margin-bottom: 20px;
+}
+
+.author {
+    font-weight: bold;
+    margin-top: 0;
+}
+.textcontainer{
+  text-align: center;
+}
+
+.contact-container {
+      text-align: left;
+      margin-left: 30px;
+      background-image: url("https://images.homify.com/c_fill,f_auto,h_700,q_auto/v1610539887/p/photo/image/3728071/IMG-20210110-WA0014.jpg");
+      height: 100%;
+      background-repeat: no-repeat;
+      background-size: cover;
+      margin:0%;
+      border: solid black;
+      margin-top: 30px;
+    }
+
+    .contact-info {
+      margin-bottom: 20px;
+      padding-left: 20px;
+      
+      
+    }
+
+    .contact-info p {
+      margin: 10px 0;
+      
+    }
+
+    .contact-info i {
+      margin-right: 10px;
+    }
+
+    .contact-form {
+      width: 100%;
+      max-width: 500px;
+      border: 2px solid #666;
+      padding: 20px;
+      border-radius: 5px;
+      color: whitesmoke;
+    }
+
+    .contact-form h2 {
+      margin-bottom: 20px;
+    }
+
+    .contact-form form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .contact-form input, .contact-form textarea {
+      margin-bottom: 10px;
+      padding: 10px;
+      border: 1px solid black;
+      border-radius: 5px;
+      background-color: #f1f1f1;
+      color: #000;
+    }
+
+    .contact-form button {
+      padding: 10px;
+      border: 1px solid black;
+      border-radius: 5px;
+      background-color: #f1f1f1;
+      color: #000;
+      cursor: pointer;
+    }
+
+    .contact-form button:hover {
+      background-color: #333;
+      color:white;
+    }
+
+</style>
+</head>
+<body>
+
+  <div id="mySidebar" class="sidebar">
+    <a style="margin-top: 50px;" href="#Home">Home</a>
+    <a href="#Menu">Menu</a>
+    <a href="#About">About</a>
+    <a href="#Book">Book Table</a>
+    <a href="#" onclick="togglePromoCode(event)">Promo Code</a>
+  
+    <!-- Dropdown Content -->
+    <div id="promoCodeDropdown" class="promo-code-dropdown">
+      <input type="text" id="promoCodeInput" placeholder="Enter Promo Code">
+      <button type="button" onclick="submitPromoCode()">&#8594;	</button>
+    </div>
+  </div>
+
+<div class="mcontainer" onclick="myFunction(this)">
+  <div class="bar1"></div>
+  <div class="bar2"></div>
+  <div class="bar3"></div>
+</div>
+
+<div class="slideshow-container" id="Home">
+  <div class="mySlides fade">
+    <img src="https://images.pexels.com/photos/683039/pexels-photo-683039.jpeg?cs=srgb&dl=pexels-apgpotr-683039.jpg&fm=jpg" class="full-height">
+	 <div class="text-overlay">
+      <h1>The Dorritos</h1><br/>
+      <p>"Welcome to the Cafe"</p>
+    </div>
+  </div>
+
+  <div class="mySlides fade">
+    <img src="https://png.pngtree.com/background/20230519/original/pngtree-an-old-coffee-shop-with-very-dark-walls-picture-image_2652909.jpg" class="full-height">
+  </div>
+
+  <div class="mySlides fade">
+    <img src="https://wallpapers.com/images/featured/3fm8goec1wc2udxs.jpg" class="full-height">
+  </div>
+</div>
+
+<div class="hcontainer">
+<h1 Style="margin-top:20px ;margin-bottom:0px; margin-left:40px;font-size:50px;font-weight:200;color:#333;"> <i>Monsoon Special Offers </i></h1>
+  <div class="slider" id="slider">
+    <div class="coupon">
+      <div class="ccontainer">
+        <h1><i>Cappuccino</i></h1>
+      </div>
+      <img src="https://www.foodandwine.com/thmb/0cJWTx1_qsIJJE74hWLZ5rHWvsE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Partners-Cappuccino-FT-BLOG0523-d2eed8fcd48d464282176339908662f7.jpg" alt="Cappuccino" style="width:100%;">
+      <div class="ccontainer" >
+        <h2><b>20% OFF YOUR PURCHASE</b></h2>
+      </div>
+      <div class="ccontainer">
+        <p>Use Promo Code: <span class="promo">BOH232</span></p>
+        <p class="expire">Expires: Sept 03, 2024</p>
+      </div>
+    </div>
+
+    <div class="coupon">
+      <div class="ccontainer">
+        <h1><i>Belgian Waffle</i></h1>
+      </div>
+      <img src="https://cdn.pixabay.com/photo/2019/03/18/21/17/waffle-4064213_1280.jpg" alt="Waffle" style="width:100%;">
+      <div class="ccontainer" >
+        <h2><b>25% OFF YOUR PURCHASE</b></h2>
+      </div>
+      <div class="ccontainer">
+        <p>Use Promo Code: <span class="promo">WAF123</span></p>
+        <p class="expire">Expires: Sept 10, 2024</p>
+      </div>
+    </div>
+
+    <div class="coupon">
+      <div class="ccontainer">
+        <h1><i>BlueBerry Pancakes</i></h1>
+      </div>
+      <img src="https://www.inspiredtaste.net/wp-content/uploads/2019/02/Easy-Homemade-Blueberry-Pancakes-Recipe-2-1200.jpg" alt="Pancake" style="width:100%;">
+      <div class="ccontainer" >
+        <h2><b>30% OFF YOUR PURCHASE</b></h2>
+      </div>
+      <div class="ccontainer">
+        <p>Use Promo Code: <span class="promo">BLU345</span></p>
+        <p class="expire">Expires: Sept 17, 2024</p>
+      </div>
+    </div>
+
+    <div class="coupon">
+      <div class="ccontainer">
+        <h1><i> Italian Pesto</i></h1>
+      </div>
+      <img src="https://cdn.pixabay.com/photo/2016/03/17/22/56/pasta-1264056_1280.jpg" alt="Pasta" style="width:100%;">
+      <div class="ccontainer">
+        <h2><b>15% OFF YOUR PURCHASE</b></h2>
+      </div>
+      <div class="ccontainer">
+        <p>Use Promo Code: <span class="promo">PAS456</span></p>
+        <p class="expire">Expires: Sept 24, 2024</p>
+      </div>
+    </div>
+
+    <div class="coupon">
+      <div class="ccontainer">
+        <h1><i> Almond Granola</i></h1>
+      </div>
+      <img src="https://www.culinaryhill.com/wp-content/uploads/2021/01/How-to-Make-Granola-Culinary-Hill-1200x800-1.jpg" alt="Granola" style="width:100%;">
+      <div class="ccontainer" >
+        <h2><b>10% OFF YOUR PURCHASE</b></h2>
+      </div>
+      <div class="ccontainer">
+        <p>Use Promo Code: <span class="promo">GRA567</span></p>
+        <p class="expire">Expires: Oct 01, 2024</p>
+      </div>
+    </div>
+  </div>
+
+  <a class="arrow prev" onclick="slide(-1)">&#10094;</a>
+  <a class="arrow next" onclick="slide(1)">&#10095;</a>
+</div>
+<div class="cafe" id="Menu"><br/> <br/>
+<h1 Style="margin-top:20px ; margin-left:40px;font-size:50px;font-weight:200;color:#333;"> <i>Menu </i></h1>
+<div id="Grid1" class="tab-content active">
+  <div class="grid-container">
+    <!-- Grid 1 content -->
+    <div class="grid-item">
+      <img src="https://cdn.pixabay.com/photo/2017/08/06/06/42/pizza-2589569_960_720.jpg" alt="Delicious Pizza">
+      <h3>Margherita</h3>
+      <p>Lorem ipsum text praesent tincidunt ipsum lipsum.</p>
+    </div>
+    <div class="grid-item">
+      <img src="https://itsavegworldafterall.com/wp-content/uploads/2019/06/Vegetarian-Italian-Stuffed-Peppers-4.jpg" alt="Stuffed Peppers">
+      <h3>Stuffed Peppers</h3>
+      <p>Lorem ipsum text praesent tincidunt ipsum lipsum.</p>
+    </div>
+    <div class="grid-item">
+      <img src="https://cdn.pixabay.com/photo/2017/06/29/20/09/plugs-2456040_640.jpg" alt="Tasty Tacos">
+      <h3>Tasty Tacos</h3>
+      <p>Lorem ipsum text praesent tincidunt ipsum lipsum. What else?</p>
+    </div>
+    <div class="grid-item">
+      <img src="https://i.pinimg.com/736x/ee/90/8d/ee908df06e4d49dad3495f986e5edf5c.jpg" alt="Healthy Breakfast">
+      <h3>Healthy Breakfast</h3>
+      <p>Lorem ipsum text praesent tincidunt ipsum lipsum.</p>
+    </div>
+    <div class="grid-item">
+      <img src="https://www.meatloafandmelodrama.com/wp-content/uploads/2021/12/instant-pot-chicken-alfredo.jpeg" alt="Italian Pesto">
+      <h3>Italian Pesto</h3>
+      <p>Lorem ipsum text praesent tincidunt ipsum lipsum.</p>
+    </div>
+    <div class="grid-item">
+      <img src="https://img.freepik.com/premium-photo/granola-with-milk-chia-berries-peanut-butter-white-bowl_79830-280.jpg" alt="Seafood Delight">
+      <h3>Almond Granola</h3>
+      <p>Once again, some random text praesent tincidunt ipsum lipsum.</p>
+    </div>
+    <div class="grid-item">
+      <img src="https://cdn.pixabay.com/photo/2021/10/10/16/30/food-6697405_640.jpg" alt="The Perfect Sandwich, A Real Classic">
+      <h3>The Perfect Sandwich, A Real Classic</h3>
+      <p>Just some random text praesent tincidunt ipsum lipsum.</p>
+    </div>
+    <div class="grid-item">
+      <img src="https://static.iwmbuzz.com/wp-content/uploads/2022/05/le-chef-make-these-french-dishes-at-home-and-earn-the-tag-of-le-chef-2-614x920.jpg" alt="Le French">
+      <h3>Le French</h3>
+      <p>Lorem ipsum text praesent tincidunt ipsum lipsum.</p>
+    </div>
+  </div>
+</div>
+
+<div id="Grid2" class="tab-content">
+  <div class="grid-container">
+    <!-- Grid 2 content -->
+    <div class="grid-item">
+      <img src="https://cdn.pixabay.com/photo/2018/11/16/11/37/steak-3819246_640.jpg" alt="Let Me Tell You About This Steak">
+      <h3>Let Me Tell You About This Steak</h3>
+      <p>Once again, some random text praesent tincidunt ipsum lipsum.</p>
+    </div>
+    
+    <div class="grid-item">
+      <img src="https://whattocooktoday.com/wp-content/uploads/2012/04/cajun-grilled-fish-14.jpg" alt="Grilled Fish">
+      <h3>Grilled Fish</h3>
+      <p>Lorem ipsum text praesent tincidunt ipsum lipsum.</p>
+    </div>
+    <div class="grid-item">
+      <img src="https://cdn.pixabay.com/photo/2021/10/16/12/51/food-6714960_640.jpg" alt="Juicy Hamburger">
+      <h3>Grilled Chicken</h3>
+      <p>Lorem ipsum text praesent tincidunt ipsum lipsum. What else?</p>
+    </div>
+    <div class="grid-item">
+      <img src="https://cdn.pixabay.com/photo/2015/01/30/08/23/seafood-617164_640.jpg" alt="Salmon For Your Skin">
+      <h3>Salmon For Your Skin</h3>
+      <p>Once again, some random text praesent tincidunt ipsum lipsum.</p>
+    </div>
+    <div class="grid-item">
+      <img src="https://cdn.pixabay.com/photo/2021/02/04/12/47/food-5981232_640.jpg" alt="Fresh Salad">
+      <h3>Bacon Omlette</h3>
+      <p>Lorem ipsum text praesent tincidunt ipsum lipsum.</p>
+    </div>
+    <div class="grid-item">
+      <img src="https://www.lecremedelacrumb.com/wp-content/uploads/2021/03/one-pot-lemon-herb-chicken-rice-6sm-4.jpg" alt="Mixed Fruit">
+      <h3>Chicken Rice</h3>
+      <p>Once again, some random text praesent tincidunt ipsum lipsum.</p>
+    </div>
+    <div class="grid-item">
+      <img src="https://i.pinimg.com/736x/3c/7a/e4/3c7ae46d2337277ba00516cb7532cbd2.jpg" alt="Chicken Gravy">
+      <h3>Chicken Gravy</h3>
+      <p>Just some random text praesent tincidunt ipsum lipsum.</p>
+    </div>
+    <div class="grid-item">
+      <img src="https://www.mygourmetconnection.com/wp-content/uploads/roast-duck-orange-rosemary-sauce.jpg" alt="Duck à l'orange">
+      <h3>Duck à l'orange</h3>
+      <p>Lorem ipsum text praesent tincidunt ipsum lipsum.</p>
+    </div>
+  </div>
+</div>
+
+<div id="Grid3" class="tab-content">
+  <div class="grid-container">
+    <!-- Grid 3 content -->
+    <div class="grid-item">
+      <img src="https://plus.unsplash.com/premium_photo-1674327105280-b86494dfc690?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y2FwcHVjY2lub3xlbnwwfHwwfHx8MA%3D%3D" alt="Morning Coffee">
+      <h3>Cappuccino</h3>
+      <p>Lorem ipsum text praesent tincidunt ipsum lipsum.</p>
+    </div>
+    <div class="grid-item">
+      <img src="https://wholefully.com/wp-content/uploads/2021/06/homemade-iced-mocha-coffee.jpg" alt="The Perfect Sandwich, A Real NYC Classic">
+      <h3>The Iced Mochas</h3>
+      <p>Just some random text praesent tincidunt ipsum lipsum.</p>
+    </div>
+    <div class="grid-item">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3qLE_PL2BTqzWwvxBECC04LsX7X-L_GFx3TWnGgKCmN_XgffUOrnEPstZCQvIcMHoNvs&usqp=CAU" alt="Rose Latte">
+      <h3>Rose Latte</h3>
+      <p>Lorem ipsum text praesent tincidunt ipsum lipsum. What else?</p>
+    </div>
+    <div class="grid-item">
+      <img src="https://cdn.pixabay.com/photo/2018/10/09/10/15/wine-3734605_640.jpg" alt="Once Again, Robust Wine and Vegetable Pasta">
+      <h3> Red Wine </h3>
+      <p>Lorem ipsum text praesent tincidunt ipsum lipsum.</p>
+    </div>
+    <div class="grid-item">
+      <img src="https://cdn.pixabay.com/photo/2021/02/03/12/00/drink-5977684_640.jpg" alt="Orange Juice">
+      <h3>Orange Juice</h3>
+      <p>Lorem ipsum text praesent tincidunt ipsum lipsum.</p>
+    </div>
+       
+    <div class="grid-item">
+      <img src="https://cdn.pixabay.com/photo/2020/03/07/05/18/beverage-4908765_1280.jpg" alt="Oreo Milkshake">
+      <h3>Oreo Milkshake</h3>
+      <p>Lorem ipsum text praesent tincidunt ipsum lipsum.</p>
+    </div>
+    <div class="grid-item">
+      <img src="https://balancingmotherhood.com/wp-content/uploads/2022/05/peanut-butter-chocolate-milkshake.jpg" alt="Milkshake">
+      <h3>Choclate Icecream Banana Milkshake</h3>
+      <p>Just some random text praesent tincidunt ipsum lipsum.</p>
+    </div>
+    <div class="grid-item">
+      <img src="https://cdn.pixabay.com/photo/2020/03/20/20/50/cocktail-4951993_1280.jpg" alt="Fruit Cocktail">
+      <h3>Fruit Cocktail</h3>
+      <p>Lorem ipsum text praesent tincidunt ipsum lipsum.</p>
+    </div>
+  </div>
+</div>
+
+<div id="Grid4" class="tab-content">
+  <div class="grid-container">
+    <!-- Grid 4 content -->
+    <div class="grid-item">
+      <img src="https://cdn.pixabay.com/photo/2016/12/17/18/50/cherry-1914118_640.jpg" alt="Cherries, interrupted">
+      <h3>Cherries, interrupted</h3>
+      <p>Lorem ipsum text praesent tincidunt ipsum lipsum. What else?</p>
+    </div>
+    <div class="grid-item">
+      <img src="https://cdn.pixabay.com/photo/2016/11/21/14/15/cold-1845630_640.jpg" alt="All I Need Is a Popsicle">
+      <h3>All I Need Is a Popsicle</h3>
+      <p>Lorem ipsum text praesent tincidunt ipsum lipsum.</p>
+    </div>
+    <div class="grid-item">
+      <img src="https://curlygirlkitchen.com/wp-content/uploads/2024/01/Crispy-Chocolate-Waffles-High-Altitude-007.jpg" alt="Waffle">
+      <h3>Belgia Waffle</h3>
+      <p>Lorem ipsum text praesent tincidunt ipsum lipsum. What else?</p>
+    </div>
+    <div class="grid-item">
+      <img src="https://www.spendwithpennies.com/wp-content/uploads/2023/06/1200-Blueberry-Pancakes-3-SpendWithPennies.jpg" alt="BlueBerry Pancakes">
+      <h3>BlueBerry Pancakes</h3>
+      <p>Lorem ipsum text praesent tincidunt ipsum lipsum.</p>
+    </div>
+    <div class="grid-item">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQtyrN8d8cMT4d-3vwUWgO4RXNswmsvZmwQk2Kc15wCrnFJHJ4Nduqe6V54c-Zsi3Rd5I&usqp=CAU" alt="Sandwich">
+      <h3>Dark Choclate</h3>
+      <p>Just some random text praesent tincidunt ipsum lipsum.</p>
+    </div>
+    <div class="grid-item">
+      <img src="https://bakerbynature.com/wp-content/uploads/2016/11/untitled-17-of-74-3-1.jpg" alt="Red Velvet">
+      <h3>Red Velvet</h3>
+      <p>Lorem ipsum text praesent tincidunt ipsum lipsum.</p>
+    </div>
+    <div class="grid-item">
+      <img src="https://cdn.pixabay.com/photo/2020/03/01/22/04/ice-cream-4894270_640.jpg" alt="Grilled Fish">
+      <h3>Icecream</h3>
+      <p>Lorem ipsum text praesent tincidunt ipsum lipsum.</p>
+    </div>
+    <div class="grid-item">
+      <img src="https://www.cubesnjuliennes.com/wp-content/uploads/2019/11/Gajar-Ka-Halwa-2.jpg" alt="Gajar Halwa">
+      <h3>Gajar Halwa</h3>
+      <p>Lorem ipsum text praesent tincidunt ipsum lipsum.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pagination">
+  <button class="active" onclick="openPage(event, 'Grid1')">1</button>
+  <button onclick="openPage(event, 'Grid2')">2</button>
+  <button onclick="openPage(event, 'Grid3')">3</button>
+  <button onclick="openPage(event, 'Grid4')">4</button>
+</div>
+<br/> <br/> 
+</div>
+<br/>
+  <div id="About" class="quote-box">
+      <p class="quote"> <b>
+          "Open from 10am to 9pm."<br/>
+           Open : Monday - Sunday
+          </b>
+  </div>
+
+  <div class="quote-box">
+    <p class="quote">
+        "Use products from nature for what it's worth - but never too early, nor too late." Fresh is the new sweet.
+    </p>
+    <p class="author">Chef, Coffeeist and Owner: Rohit Prajapati</p>
+</div>
+
+      <img style="display: block;margin: 0 auto;" src="https://miro.medium.com/v2/resize:fit:828/format:webp/1*VXIymcsaDjYpbVqf-_f9rg.jpeg" alt="Profile Image">
+  
+  <div class="textcontainer">
+      <h1>I am Who I Am!</h1>
+      <h2><i>With Passion For Real, Good Food</i></h2>
+      <p style="margin: 0px 20px;">
+          Just me, myself and I, exploring the universe of unknownment. I have a heart of love and an interest of lorem ipsum and mauris neque quam blog. I want to share my world with you. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.
+      </p>
+  </div>
+
+  <div id="Book" class="contact-container">
+    <div style="color: white;" class="contact-info"><b>
+      <p style="margin-top: 50px;"><i class="fa fa-map-marker"></i> Bhandup , Mumbai</p>
+      <p><i class="fa fa-phone"></i> Phone: +91 8693986954</p>
+      <p><i class="fa fa-envelope"></i> Email: rohitprajapati0604@gmail.com</p></b>
+    </div>
+    <div style="margin-left: 40px;" class="contact-form">
+      <h2 style="font-size: 35px;color:#f1f1f1;margin-left: 20px;padding: 5px;"> <b><strong> <i>Reserve a table, ask for today's special or just send us a message:</i></strong></b> </h2>
+      <form>
+        <input type="text" name="name" placeholder="Name" required>
+        <input type="email" name="No of Person" placeholder="No of Person" required>
+        <input type="datetime-local" id="datetime" name="datetime" placeholder="Date and Time" required>
+        <textarea name="message" placeholder="Message" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+    <br/> <br/> <br/> <br/> <br/>  <br/> <br/> <br/>  <br/> <br/>  <br/> <br/> <br/> <br/> <br/> <br/>
+  </div>
+</div>
+
+
+<script>
+
+// Toggle sidebar menu
+function myFunction() {
+  const sidebar = document.getElementById("mySidebar");
+  if (sidebar.classList.contains("open")) {
+    closeNav();
+  } else {
+    openNav();
+  }
+}
+
+// Toggle promo code dropdown
+function togglePromoCode(event) {
+  event.stopPropagation(); // Prevent the window.onclick from closing the sidebar
+  
+  var dropdown = document.getElementById("promoCodeDropdown");
+  // Toggle visibility
+  if (dropdown.style.display === "block") {
+    dropdown.style.display = "none";
+  } else {
+    dropdown.style.display = "block";
+  }
+}
+
+// Handle promo code submission
+function submitPromoCode() {
+  var promoCode = document.getElementById("promoCodeInput").value;
+  alert("Promo Code Submitted: " + promoCode);
+  // Add your submission logic here
+}
+
+// Open sidebar
+function openNav() {
+  document.getElementById("mySidebar").classList.add("open");
+}
+
+// Close sidebar
+function closeNav() {
+  document.getElementById("mySidebar").classList.remove("open");
+}
+
+// Handle window clicks to close sidebar if clicked outside
+window.onclick = function(event) {
+  if (!event.target.matches('.mcontainer') &&
+      !event.target.closest('#promoCodeDropdown') && // Exclude promo code dropdown
+      !event.target.matches('.sidebar') &&
+      !event.target.matches('[href="#"]') && // Exclude promo code link
+      document.getElementById("mySidebar").classList.contains("open")) {
+    closeNav();
+  }
+}
+
+// Show slideshow images
+let slideIndex = 0;
+showSlides();
+
+function showSlides() {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";  
+  }
+  slideIndex++;
+  if (slideIndex > slides.length) {slideIndex = 1}    
+  slides[slideIndex-1].style.display = "block";  
+  setTimeout(showSlides, 3000); // Change image every 2 seconds
+}
+
+// Handle coupon slider
+let couponSlideIndex = 0;
+
+function slide(direction) {
+  const slider = document.getElementById('slider');
+  const coupons = document.querySelectorAll('.coupon');
+  const couponWidth = coupons[0].offsetWidth + 20; // Adjust gap as needed
+
+  couponSlideIndex += direction;
+
+  if (couponSlideIndex < 0) {
+    couponSlideIndex = coupons.length - 1;
+  } else if (couponSlideIndex >= coupons.length) {
+    couponSlideIndex = 0;
+  }
+
+  slider.style.transform = `translateX(${-couponSlideIndex * couponWidth}px)`;
+}
+
+// Handle tab navigation
+function openPage(evt, pageName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tab-content");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].classList.remove("active");
+  }
+  tablinks = document.getElementsByClassName("pagination")[0].getElementsByTagName("button");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].classList.remove("active");
+  }
+  document.getElementById(pageName).classList.add("active");
+  evt.currentTarget.classList.add("active");
+}
+
+
+</script>
+
+</body>
+</hthml>

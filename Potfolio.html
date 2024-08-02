@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio</title>
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: white;
+      background-color: #000; /* Ensure the background is black */
+    }
+
+    .topnav {
+      background-color: #333;
+      overflow: hidden;
+      margin-top: 40px;
+    }
+
+    .topnav a {
+      float: left;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+    }
+
+    .topnav a:hover {
+      background-color: black;
+      color: white;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .bg-image {
+      height: 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    .container {
+      width: 95%;
+      background-color: grey;
+      margin-left: 30px;
+    }
+
+    p {
+      margin-left: 30px;
+    }
+
+    .skills {
+      text-align: right;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      color: white;
+    }
+
+    .net { width: 90%; background-color: #333; margin-right: 50px; }
+    .mvc { width: 80%; background-color: #333; }
+    .js { width: 65%; background-color: #333; }
+    .sql { width: 60%; background-color: #333; }
+
+    .img2 { background-image: url("https://media.istockphoto.com/id/487155655/photo/monochrome-profile-portrait-of-young-caucasian-man-on-black-back.jpg?s=612x612&w=0&k=20&c=aMA88b-yNwgypqoCGblDF1126PJZRRC_TRxSQNSPQhs="); }
+    .img1 { background-color: black; height: 15%; }
+    .img3 { background-color: black; height: 50%; }
+    .img4 { background-color: black; height: 80%; }
+    .img5 { background-color: black; height: 100%; }
+    .img6 { background-color: black; height: 100%; }
+    .img7 { background-color: black; height: 100%; }
+
+    .card {
+      background-color: white;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      max-width: 300px;
+      margin: auto;
+      text-align: center;
+      font-family: Arial, Helvetica, sans-serif;
+      padding-bottom: 20px;
+      color: black;
+    }
+
+    .title {
+      color: grey;
+      font-size: 18px;
+    }
+
+    .card-container {
+      display: flex;
+      justify-content: space-between;
+      max-width: 800px;
+      margin: auto;
+      padding-top: 20px;
+    }
+
+    .card img {
+      width: 100%;
+      height: auto;
+    }
+
+    .date {
+      font-size: 14px;
+      color: #777;
+      margin-top: 10px;
+    }
+
+    .contact-container {
+      text-align: left;
+      margin-left: 30px;
+      
+    }
+
+    .contact-info {
+      margin-bottom: 20px;
+      padding-left: 20px;
+      
+    }
+
+    .contact-info p {
+      margin: 10px 0;
+    }
+
+    .contact-info i {
+      margin-right: 10px;
+    }
+
+    .contact-form {
+      width: 100%;
+      max-width: 500px;
+      background-color: #000;
+      padding: 20px;
+      border-radius: 5px;
+    }
+
+    .contact-form h2 {
+      margin-bottom: 20px;
+    }
+
+    .contact-form form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .contact-form input, .contact-form textarea {
+      margin-bottom: 10px;
+      padding: 10px;
+      border: 1px solid #fff;
+      border-radius: 5px;
+      background-color: #fff;
+      color: #000;
+    }
+
+    .contact-form button {
+      padding: 10px;
+      border: 1px solid #fff;
+      border-radius: 5px;
+      background-color: #fff;
+      color: #000;
+      cursor: pointer;
+    }
+
+    .contact-form button:hover {
+      background-color: #e0e0e0;
+    }
+    .resume-button {
+  background-color: white ;
+  color: black;
+  padding: 14px 20px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 17px;
+  margin-top: 80px; /* Adjust as needed */
+  margin-left: 30px;
+  margin-right: 10px; /* Adjust as needed */
+  border-radius: 5px;
+  margin-bottom: 50px;
+}
+
+.resume-button:hover {
+  background-color: #333;
+  color: white;
+}
+
+.resume-button i {
+  margin-right: 5px; /* Adjust icon spacing */
+}
+    .section-title {
+            font-size: 24px;
+            border-bottom: 2px solid #444;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .icon-project{
+            font-size: 24px;
+            margin-right: 10px;
+        }
+
+        .project-item {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-bottom: 1px solid #444;
+        }       
+        .project-title {
+            font-size: 24px;
+            margin: 5px 30px;
+        }
+
+        .project-description {
+            font-size: 18px;
+            line-height: 1.5;
+        }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+
+<div class="bg-image img1" >
+  <div class="topnav" style="margin-left: 50px; margin-right: 50px;">
+    <a href="#Home">Home</a>
+    <a href="#About">About</a>
+    <a href="#Skills">Skills</a>
+    <a href="#Project">Project</a>
+    <a href="#Work">Work</a>
+    <div>
+      <a style="float: right;" href="#Contact">Contact</a>
+    </div>
+  </div>
+</div>
+
+<div class="bg-image img2" id="Home"> </br>
+  <h1 style="color: white; float: right; margin-right: 50px; font-family: Arial, Helvetica, sans-serif; font-size: 80px;">
+    <i style="float: right; margin-right: 235px;">I'm </i> <br><i>Rohit Prajapati</i>
+  </h1>
+</div>
+
+
+
+<div class="bg-image img3" id="About"></br>
+  <h1 style="color: white; margin-left: 65px; font-family: Arial, Helvetica, sans-serif; font-size: 50px; margin-bottom: 5px;">
+    <em>Rohit Prajapati</em>
+  </h1>
+  <p style="margin-left: 60px; color: white; margin-top: 3px;">
+    <b>______________________________________________________________</b>
+  </p>
+  <p style="margin-left: 60px; color: white; margin-bottom: 2px;">
+    <em>Hello! I'm Rohit Prajapati, a student and web developer passionate about creating new web designs and exploring IT industries.
+      Dive into my portfolio to discover a showcase of projects that illustrate my expertise in software development, system integration, and IT solutions.
+      From scalable web applications leveraging the .NET frameworks to backend systems ensuring seamless operations, each project here represents a commitment to efficiency,
+      innovation, and user-centric design. Whether it's developing APIs to streamline data flow, architecting cloud-based solutions for enhanced scalability, or implementing security protocols to safeguard sensitive information,
+      My portfolio encapsulates diverse skills honed through hands-on experience and continuous learning.
+      I invite you to explore how my technical proficiency and problem-solving mindset can add value to your projects. Let's collaborate and harness technology to drive your business forward.
+    </em>
+  </p>
+</div>
+
+
+
+
+<div class="bg-image img4" id="Skills"></br>
+  <h1 style="color: white; margin-left: 65px; font-family: Arial, Helvetica, sans-serif; font-size: 50px; margin-bottom: 5px;">
+    <em>Skills</em>
+  </h1>
+  <p style="margin-left: 60px; color: white; margin-top: 3px;">
+    <b>______________________________________________________________</b>
+  </p>
+  <p>.NET Core</p>
+  <div class="container">
+    <div class="skills net">90%&ensp;</div>
+  </div>
+  <p>MVC</p>
+  <div class="container">
+    <div class="skills mvc">80%&ensp;</div>
+  </div>
+  <p>JavaScript</p>
+  <div class="container">
+    <div class="skills js">65%&ensp;</div>
+  </div>
+  <p>SQL</p>
+  <div class="container">
+    <div class="skills sql">60%&ensp;</div>
+  </div>
+</div>
+
+
+
+
+<div class="bg-image img5"  id="Project" ></br>
+  <h1 style="color: white; margin-left: 65px; font-family: Arial, Helvetica, sans-serif; font-size: 50px; margin-bottom: 5px;">
+    <em>Projects</em>
+  </h1>
+  <p style="margin-left: 60px; color: white; margin-top: 3px;">
+    <b>______________________________________________________________</b>
+  </p>
+  <div class="project-item">
+           
+    <h3 class="project-title">Tour and Travelism Website</h3>
+    <p class="project-description">I have developed a comprehensive Tour and Travelism website using .NET Core, designed to enhance travel experiences by offering a range of features for planning and booking trips. This platform integrates seamlessly with various APIs and services to provide users with a rich, interactive experience for exploring destinations, managing bookings, and accessing travel information.</p>
+</div>
+
+<div class="project-item">
+    
+    <h3 class="project-title">Chatbot / Websocket </h3>
+    <p class="project-description">I have developed an advanced chatbot using .NET Core that enhances user interactions through dynamic and context-aware responses. Leveraging the power of the .NET framework, this chatbot is designed to streamline communication and deliver efficient, automated assistance across various platforms</p>
+</div>
+
+<div class="project-item">
+    <h3 class="project-title">Bloging Platform</h3>
+    <p  class="project-description">I have developed a robust blogging platform using .NET Core, featuring a comprehensive backend database to support a dynamic and interactive blogging experience. This platform is designed to cater to bloggers and readers alike, offering a user-friendly interface and powerful backend functionalities.</p>
+</div>
+<a href="file:///C:/Users/vinay/OneDrive/Desktop/Resume.pdf" download class="resume-button">
+  <i class="fas fa-download"></i> Download Resume
+</a>
+</div>
+
+
+<div class="bg-image img6"  id="Work" > </br>
+  <h1 style="color: white; margin-left: 65px; font-family: Arial, Helvetica, sans-serif; font-size: 50px; margin-bottom: 5px;">
+    <em>Work Experience</em>
+  </h1>
+  <p style="margin-left: 60px; color: white; margin-top: 3px;">
+    <b>______________________________________________________________</b>
+  </p>
+  <div class="card-container">
+    <div class="card">
+      <img src="https://miro.medium.com/v2/resize:fit:1024/1*zy4V60togvKjODoTCuG61g.jpeg" alt="Web">
+      <h1>Frontend Web Developer</h1>
+      <p class="title">CodSoft, Intern</p>
+      <p>I've gained invaluable hands-on experience in projects, honing my skills and developing a deep understanding of the industry.</p>
+      <p class="date"><i class='far fa-calendar-alt'></i> July 2024</p>
+    </div>
+    <div class="card">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSP5MQUZvCyoWl7QzN6L-Q_yCUZ8dGVIluC0A&sg" alt="Second Image">
+      <h1>Full Stack Web Developer</h1>
+      <p class="title">Prodigy Infotech, Intern</p>
+      <p>Prodigy Infotech has significantly contributed to my professional development. I have been able to enhance my skills in .NET.</p>
+      <p class="date"><i class='far fa-calendar-alt'></i> August 2024</p>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="bg-image img7" id="Contact" ></br>
+  <h1 style="color: white; margin-left: 65px; font-family: Arial, Helvetica, sans-serif; font-size: 50px; margin-bottom: 5px;">
+    <em>Contact </em>
+  </h1>
+  <p style="margin-left: 60px; color: white; margin-top: 3px;">
+    <b>______________________________________________________________</b>
+  </p>
+  <div class="contact-container">
+    <div class="contact-info">
+      <p style="margin-top: 50px;"><i class="fa fa-map-marker"></i> Mumbai, India</p>
+      <p><i class="fa fa-phone"></i> Phone: +91 8693986954</p>
+      <p><i class="fa fa-envelope"></i> Email: rohitprajapati0604@gmail.com</p>
+    </div>
+    <div class="contact-form">
+      <h2>Let's get in touch. Send me a message:</h2>
+      <form>
+        <input type="text" name="name" placeholder="Name" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="text" name="subject" placeholder="Subject" required>
+        <textarea name="message" placeholder="Message" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
